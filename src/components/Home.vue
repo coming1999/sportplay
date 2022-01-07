@@ -1,0 +1,101 @@
+<template>
+<!-- 引入container布局 -->
+<el-container class="home-container">
+    <!-- 头部 -->
+  <el-header>
+      <div> 
+          <img src="../assets/csgo.jpeg" alt=""/>
+          <span> 个人运动平台 </span>
+      </div>
+      <el-button type="info" @click="logout">安全退出</el-button>
+  </el-header>
+  <!-- 主体 -->
+  <el-container>
+      <!-- 侧边栏 -->
+    <el-aside width="200px">
+    <el-menu
+      background-color="#545c64" text-color="#fff" active-text-color="#409eff">
+      <!-- 一级菜单 -->
+      <el-submenu index="1">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>导航一</span>
+        </template>
+        <!-- 二级菜单 -->
+        <el-menu-item index="1-1">
+             <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>111</span>
+        </template>
+        </el-menu-item>
+      </el-submenu>
+    </el-menu>
+    </el-aside>
+    
+    <!-- 主体内容 -->
+    <el-main>Main
+        {{menuList}}
+    </el-main>
+  </el-container>
+</el-container>
+</template>
+<script>
+export default {
+    data () {
+        return {
+            //菜单列表
+            menuList: [],
+        }
+    },
+    //一进来就调用的方法，用created()
+    created () {
+        //查询menuList
+        this.getMenuList();
+    },
+    methods:{
+        logout(){
+            window.sessionStorage.clear();// 清除Session
+            this.$router.push("/login");// 回到首页
+        },
+        //获取导航菜单方法
+        async getMenuList() {
+            const {data:res} =await this.$http.get("/menus");
+            console.log(res);
+            if(res.flag != 200) return this.$message.console.error("获取列表失败");
+            this.menuList = res.menus;//数据回填
+        },
+    },
+}
+</script>
+
+<style scoped>
+/* 布局器样式 */
+.home-container {
+    height: 100%;
+}
+.el-header {
+    background-color: #373d41;
+    display: flex;
+    justify-content: space-between; /* 左右贴边 */
+    padding-left: 0%; /* 左边界 */
+    color: #fff;
+    font-size: 20px;
+}
+div {
+    display: flex;
+    align-items: center;
+}
+span{
+       margin-left: 15px; 
+    }
+.el-aside {
+    background-color: #333744;
+}
+.el-main {
+    background-color: #eaedf1;
+}
+img {
+    width: 75px;
+    height: 70px;
+}
+</style>
