@@ -4,3 +4,11 @@ HTML,body,#app{
     margin: 0;
     padding: 0;
 }
+/* 卡片区域 ！important 提高样式级别 */
+.el-card{
+    width: 1300px;
+    position: absolute;
+    left: 5%;
+    transform: translate(10%,50%);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15) !important;
+}
